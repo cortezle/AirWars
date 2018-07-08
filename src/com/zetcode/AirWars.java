@@ -42,8 +42,8 @@ public class AirWars extends JFrame implements Commons {
         
         EventQueue.invokeLater(() -> {
             new LOGER().setVisible(true);
-            AirWars ex = new AirWars();
-            ex.setVisible(true);
+            /*AirWars ex = new AirWars();
+            ex.setVisible(true);*/
         });
     }
 }

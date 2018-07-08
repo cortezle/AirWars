@@ -5,8 +5,10 @@
  */
 package vista;
 
+import com.zetcode.AirWars;
 import javax.swing.JOptionPane;
 import dao.LoginDAO;
+import java.awt.EventQueue;
 import modelo.Login;
 
 /**
@@ -44,6 +46,11 @@ public class LOGER extends javax.swing.JFrame {
         lblnickname.setText("Nickname");
 
         ingresar.setText("Ingresar");
+        ingresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingresarMouseClicked(evt);
+            }
+        });
         ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresarActionPerformed(evt);
@@ -110,11 +117,18 @@ public class LOGER extends javax.swing.JFrame {
         Login l = new Login(textnickname.getText());
         
         if(ld.create(l)){
-            JOptionPane.showMessageDialog(null, "Nickname guardado. ¡A jugar!");
             limpiarCampos();
         }
         
     }//GEN-LAST:event_ingresarActionPerformed
+
+    private void ingresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarMouseClicked
+        EventQueue.invokeLater(() -> {
+            AirWars ex = new AirWars();
+            ex.setVisible(true);
+        });
+        LOGER.this.dispose();
+    }//GEN-LAST:event_ingresarMouseClicked
 
     public void limpiarCampos(){
         textnickname.setText("");
