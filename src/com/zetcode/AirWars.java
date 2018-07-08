@@ -9,10 +9,13 @@ package com.zetcode;
  *
  * @author Lucho
  */
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 public class AirWars extends JFrame implements Commons {
+    
 
     public AirWars() {
 
@@ -23,11 +26,15 @@ public class AirWars extends JFrame implements Commons {
 
         add(new Board());
         setTitle("Space Invaders");
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(BOARD_WIDTH, BOARD_HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        
     }
+
 
     public static void main(String[] args) {
         

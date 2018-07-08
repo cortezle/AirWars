@@ -9,6 +9,8 @@ package com.zetcode;
  *
  * @author Lucho
  */
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -56,9 +58,9 @@ public class Board extends JPanel implements Runnable, Commons {
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
-
         gameInit();
         setDoubleBuffered(true);
+        Sonido();
     }
 
     @Override
@@ -71,7 +73,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameInit() {
 
         aliens = new ArrayList<>();
-
+        
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
 
@@ -220,6 +222,7 @@ public class Board extends JPanel implements Runnable, Commons {
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
                         deaths++;
+                       
                         shot.die();
                     }
                 }
@@ -389,6 +392,13 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
             }
         }
+    }
+    
+    public void Sonido(){
+        AudioClip audio;
+        audio = Applet.newAudioClip(getClass().getResource("aw.wav"));
+        audio.play();
+        //audio.loop();
     }
 
 }
