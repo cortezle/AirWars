@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zetcode;
+package Objetos;
 
 /**
  *
@@ -164,51 +164,10 @@ public class Board extends JPanel implements Runnable, Commons {
 
     }
     
-    public void drawCronometro(Graphics g){
-        /*  try
-        {
-                 while( cronometroActivo )
-            {
-                Thread.sleep( 4 );
-                //Incrementamos 4 milesimas de segundo
-                milesimas += 4;
-                 
-                //Cuando llega a 1000 osea 1 segundo aumenta 1 segundo
-                //y las milesimas de segundo de nuevo a 0
-                if( milesimas == 1000 )
-                {
-                    milesimas = 0;
-                    segundos += 1;
-                    //Si los segundos llegan a 60 entonces aumenta 1 los minutos
-                    //y los segundos vuelven a 0
-                    if( segundos == 60 )
-                    {
-                        segundos = 0;
-                        minutos++;
-                    }
-                }
- 
-                //Esto solamente es estetica para que siempre este en formato
-                //00:00:000
-                if( minutos < 10 ) min = "0" + minutos;
-                else min = minutos.toString();
-                if( segundos < 10 ) seg = "0" + segundos;
-                else seg = segundos.toString();
-                 
-                if( milesimas < 10 ) mil = "00" + milesimas;
-                else if( milesimas < 100 ) mil = "0" + milesimas;
-                else mil = milesimas.toString();
-                 
-                //Colocamos en la etiqueta la informacion
-                tiempo = ( min + ":" + seg + ":" + mil );                
-            }
-        }catch(Exception e){}*/
-        //Cuando se reincie se coloca nuevamente en 00:00:000
-        tiempo =( "00:00:000" );
-    
-        g.drawString(tiempo, 10, 10);
-        g.drawString("SCORE ", 100, 10);
+    public void drawDetails(Graphics g){
+        g.drawString("AIR WARS", 150, 12);
         g.drawString("ORIGINAL CONCEPT BY UCA 2018 C", 10, 318);
+        g.drawString("cd",10,12);
     }
 
     @Override
@@ -226,7 +185,7 @@ public class Board extends JPanel implements Runnable, Commons {
             drawPlayer(g);
             drawShot(g);
             drawBombing(g);
-            drawCronometro(g);
+            drawDetails(g);
         }
 
         Toolkit.getDefaultToolkit().sync();

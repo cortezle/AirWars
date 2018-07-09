@@ -5,7 +5,7 @@
  */
 package vista;
 
-import com.zetcode.AirWars;
+import Objetos.AirWars;
 import javax.swing.JOptionPane;
 import dao.InfoDAO;
 import java.awt.EventQueue;
@@ -20,6 +20,8 @@ public class LOGER extends javax.swing.JFrame {
     /**
      * Creates new form LOGER
      */
+    
+    Info jug = new Info();
     public LOGER() {
         initComponents();
         this.setTitle("LOGIN");
@@ -115,7 +117,8 @@ public class LOGER extends javax.swing.JFrame {
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
         InfoDAO ld = new InfoDAO();
         Info l = new Info(textnickname.getText());
-        
+        jug.setNombre(textnickname.getText());
+        System.out.println(jug.getNombre());
         if(ld.create(l)){
             limpiarCampos();
         }
