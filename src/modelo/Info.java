@@ -9,14 +9,25 @@ package modelo;
  *
  * @author danie
  */
-public class Login {
+public class Info {
     private String nombre;
+    private int puntaje;
 
-    public Login() {
+    public Info() {
+        
     }
 
-    public Login(String nombre) {
+    public Info(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Info(int puntaje) {
+        this.puntaje = puntaje;
+    }
+    
+    public Info(String nombre, int puntaje) {
+        this.nombre = nombre;
+        this.puntaje = puntaje;
     }
 
     public String getNombre() {
@@ -26,6 +37,13 @@ public class Login {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }    
     
 }

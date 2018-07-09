@@ -5,6 +5,8 @@
  */
 package interfaces;
 
+import java.util.ArrayList;
+
 
 
 /**
@@ -13,5 +15,8 @@ package interfaces;
  */
 public interface metodos <Generic>{
     public boolean create (Generic g);
+    
+    public Generic read(Object key);
+    public ArrayList<Generic> readAll();
     
 }

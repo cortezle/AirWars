@@ -7,9 +7,9 @@ package vista;
 
 import com.zetcode.AirWars;
 import javax.swing.JOptionPane;
-import dao.LoginDAO;
+import dao.InfoDAO;
 import java.awt.EventQueue;
-import modelo.Login;
+import modelo.Info;
 
 /**
  *
@@ -113,8 +113,8 @@ public class LOGER extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-        LoginDAO ld = new LoginDAO();
-        Login l = new Login(textnickname.getText());
+        InfoDAO ld = new InfoDAO();
+        Info l = new Info(textnickname.getText());
         
         if(ld.create(l)){
             limpiarCampos();

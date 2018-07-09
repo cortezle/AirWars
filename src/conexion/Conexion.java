@@ -49,7 +49,7 @@ public class Conexion {
         user = "root";
         pass = "";
         driver = "com.mysql.jdbc.Driver";
-        url = "jdbc:mysql://localhost/login";
+        url = "jdbc:mysql://localhost:3306/airwars";
     }
 
     public Connection getCnx() {
