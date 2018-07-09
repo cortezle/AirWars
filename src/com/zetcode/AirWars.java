@@ -26,14 +26,14 @@ public class AirWars extends JFrame implements Commons {
     private void initUI() {
 
         add(new Board());
-        setTitle("Space Invaders");
+        setTitle("AIR WARS");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(BOARD_WIDTH, BOARD_HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
         
-        
+                
     }
 
 

@@ -11,8 +11,10 @@ package com.zetcode;
  */
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -26,6 +28,9 @@ import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable, Commons {
@@ -39,13 +44,22 @@ public class Board extends JPanel implements Runnable, Commons {
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
     private int deaths = 0;
-    int cont=0;
+    int cont = 0;
+    //JLabel g;
+     JLabel jl = new JLabel();
+     Integer minutos = 0 , segundos = 0, milesimas = 0;
+     String min="", seg="", mil="",tiempo;
+     
 
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png";
     private String message = "Game Over";
 
     private Thread animator;
+
+    
+    Thread hilo;
+    boolean cronometroActivo= true;
 
     public Board() {
 
@@ -58,9 +72,13 @@ public class Board extends JPanel implements Runnable, Commons {
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
+
         gameInit();
         setDoubleBuffered(true);
         Sonido();
+        //Cronometro();
+
+      
     }
 
     @Override
@@ -73,7 +91,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameInit() {
 
         aliens = new ArrayList<>();
-        
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
 
@@ -96,7 +114,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         Iterator it = aliens.iterator();
 
-        for (Alien alien: aliens) {
+        for (Alien alien : aliens) {
 
             if (alien.isVisible()) {
 
@@ -113,7 +131,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public void drawPlayer(Graphics g) {
 
         if (player.isVisible()) {
-            
+
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
 
@@ -127,25 +145,70 @@ public class Board extends JPanel implements Runnable, Commons {
     public void drawShot(Graphics g) {
 
         if (shot.isVisible()) {
-            
+
             g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
         }
     }
-    
+
     public void drawBombing(Graphics g) {
-        
-        
+
         for (Alien a : aliens) {
-            
+
             Alien.Bomb b = a.getBomb();
             cont++;
             if (!b.isDestroyed()) {
-                
+
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
             }
         }
 
-        
+    }
+    
+    public void drawCronometro(Graphics g){
+        /*  try
+        {
+                 while( cronometroActivo )
+            {
+                Thread.sleep( 4 );
+                //Incrementamos 4 milesimas de segundo
+                milesimas += 4;
+                 
+                //Cuando llega a 1000 osea 1 segundo aumenta 1 segundo
+                //y las milesimas de segundo de nuevo a 0
+                if( milesimas == 1000 )
+                {
+                    milesimas = 0;
+                    segundos += 1;
+                    //Si los segundos llegan a 60 entonces aumenta 1 los minutos
+                    //y los segundos vuelven a 0
+                    if( segundos == 60 )
+                    {
+                        segundos = 0;
+                        minutos++;
+                    }
+                }
+ 
+                //Esto solamente es estetica para que siempre este en formato
+                //00:00:000
+                if( minutos < 10 ) min = "0" + minutos;
+                else min = minutos.toString();
+                if( segundos < 10 ) seg = "0" + segundos;
+                else seg = segundos.toString();
+                 
+                if( milesimas < 10 ) mil = "00" + milesimas;
+                else if( milesimas < 100 ) mil = "0" + milesimas;
+                else mil = milesimas.toString();
+                 
+                //Colocamos en la etiqueta la informacion
+                tiempo = ( min + ":" + seg + ":" + mil );                
+            }
+        }catch(Exception e){}*/
+        //Cuando se reincie se coloca nuevamente en 00:00:000
+        tiempo =( "00:00:000" );
+    
+        g.drawString(tiempo, 10, 10);
+        g.drawString("SCORE ", 100, 10);
+        g.drawString("ORIGINAL CONCEPT BY UCA 2018 C", 10, 318);
     }
 
     @Override
@@ -163,6 +226,7 @@ public class Board extends JPanel implements Runnable, Commons {
             drawPlayer(g);
             drawShot(g);
             drawBombing(g);
+            drawCronometro(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -183,6 +247,8 @@ public class Board extends JPanel implements Runnable, Commons {
 
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
+        
+        
 
         g.setColor(Color.white);
         g.setFont(small);
@@ -207,7 +273,7 @@ public class Board extends JPanel implements Runnable, Commons {
             int shotX = shot.getX();
             int shotY = shot.getY();
 
-            for (Alien alien: aliens) {
+            for (Alien alien : aliens) {
 
                 int alienX = alien.getX();
                 int alienY = alien.getY();
@@ -222,10 +288,11 @@ public class Board extends JPanel implements Runnable, Commons {
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
                         deaths++;
-                       
+
                         shot.die();
                     }
                 }
+
             }
 
             int y = shot.getY();
@@ -239,8 +306,7 @@ public class Board extends JPanel implements Runnable, Commons {
         }
 
         // aliens
-
-        for (Alien alien: aliens) {
+        for (Alien alien : aliens) {
 
             int x = alien.getX();
 
@@ -273,9 +339,9 @@ public class Board extends JPanel implements Runnable, Commons {
         Iterator it = aliens.iterator();
 
         while (it.hasNext()) {
-            
+
             Alien alien = (Alien) it.next();
-            
+
             if (alien.isVisible()) {
 
                 int y = alien.getY();
@@ -292,7 +358,7 @@ public class Board extends JPanel implements Runnable, Commons {
         // bombs
         Random generator = new Random();
 
-        for (Alien alien: aliens) {
+        for (Alien alien : aliens) {
 
             int shot = generator.nextInt(15);
             Alien.Bomb b = alien.getBomb();
@@ -303,7 +369,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 b.setX(alien.getX());
                 b.setY(alien.getY());
             }
-
+   
             int bombX = b.getX();
             int bombY = b.getY();
             int playerX = player.getX();
@@ -322,17 +388,36 @@ public class Board extends JPanel implements Runnable, Commons {
                     b.setDestroyed(true);
                 }
             }
+            
+
 
             if (!b.isDestroyed()) {
-                
+
                 b.setY(b.getY() + 1);
-                
+
                 if (b.getY() >= GROUND - BOMB_HEIGHT) {
                     b.setDestroyed(true);
                 }
             }
         }
-    }
+        
+        if (shot.isVisible()) {
+            for (Alien alien : aliens){
+            int shotX = shot.getX();
+            int shotY = shot.getY();
+            Alien.Bomb b = alien.getBomb();
+            int bombX = b.getX();
+            int bombY = b.getY();
+            if (shotX >= (bombX)
+                    && shotX <= (bombX + BOMB_HEIGHT)
+                    && shotY >= (bombY)
+                    && shotY <= (bombY + BOMB_HEIGHT)) {
+                    b.setDestroyed(true);
+
+                shot.die();
+            }
+        }
+    }}
 
     @Override
     public void run() {
@@ -358,7 +443,7 @@ public class Board extends JPanel implements Runnable, Commons {
             } catch (InterruptedException e) {
                 System.out.println("interrupted");
             }
-            
+
             beforeTime = System.currentTimeMillis();
         }
 
@@ -384,7 +469,7 @@ public class Board extends JPanel implements Runnable, Commons {
             int key = e.getKeyCode();
 
             if (key == KeyEvent.VK_SPACE) {
-                
+
                 if (ingame) {
                     if (!shot.isVisible()) {
                         shot = new Shot(x, y);
@@ -393,12 +478,14 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
     }
-    
-    public void Sonido(){
+
+    public void Sonido() {
         AudioClip audio;
         audio = Applet.newAudioClip(getClass().getResource("aw.wav"));
         audio.play();
         //audio.loop();
     }
+
+    
 
 }
